@@ -16,11 +16,17 @@ class Copernicus {
     // Public constructor
     Copernicus();
 
+    // This will poll the API can get new stats
+    void update_stats();
+
     // Get if polling is enabled or not
     bool is_enabled();
 
     // Set the polling status (false = disabled)
     void set_enabled(bool status);
+
+    // Gets the current URL (hard coded)
+    string get_url();
 
     // Accessors method to get the total DNS queries for today
     string get_dns_queries();

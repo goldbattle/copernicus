@@ -16,7 +16,7 @@
 
 
 // Button IDs used by the program (used in the callbacks)
-#define IDM_ABOUT                       104
+#define IDM_PING                        104
 #define IDM_EXIT                        105
 #define IDM_ADMIN_PANEL                 106
 #define IDM_DISABLE                     32778

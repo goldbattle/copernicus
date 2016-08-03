@@ -182,11 +182,14 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam) 
 
         // If we are disabled, then show the enable button instead
         if(!appCoper.is_enabled()) {
-          InsertMenu(hPopMenu, 0xFFFFFFFF, MF_BYPOSITION|MF_STRING, IDM_ENABLE, _T("Enable"));                  
+          InsertMenu(hPopMenu, 0xFFFFFFFF, MF_BYPOSITION|MF_STRING, IDM_ENABLE, _T("Enable"));
         }
         else {
-          InsertMenu(hPopMenu, 0xFFFFFFFF, MF_BYPOSITION|MF_STRING, IDM_DISABLE, _T("Disable"));        
-        }
+          // Ping menu
+          InsertMenu(hPopMenu, 0xFFFFFFFF, MF_BYPOSITION|MF_STRING, IDM_PING, _T("Update"));
+          // Disable meny
+          InsertMenu(hPopMenu, 0xFFFFFFFF, MF_BYPOSITION|MF_STRING, IDM_DISABLE, _T("Disable"));
+        }   
 
         // Insert a nice separator
         InsertMenu(hPopMenu, 0xFFFFFFFF, MF_SEPARATOR, IDM_SEP, _T("SEP"));
@@ -212,7 +215,10 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam) 
     switch(wmId) {
       // Admin panel, open up the url
       case IDM_ADMIN_PANEL:
-        ShellExecute(NULL, "open", "http://google.com", NULL, NULL, SW_SHOWNORMAL);
+        ShellExecute(NULL, "open", appCoper.get_url().c_str(), NULL, NULL, SW_SHOWNORMAL);
+        break;
+      case IDM_PING:
+        appCoper.update_stats();
         break;
       // Disable button have been clicked, toggle our state
       case IDM_DISABLE:
