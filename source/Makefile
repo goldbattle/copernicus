@@ -7,6 +7,11 @@ INC_DIR = includes
 CC      = g++ -g
 CFLAGS  = -I${INC_DIR}
 
+# Use the following to build the program without
+# The normal console printout (MinGW)
+# http://stackoverflow.com/a/9619254
+#CFLAGS  = -I${INC_DIR} -mwindows
+
 # Note: These will soon get unwieldy.
 # The wildcard and patsubt commands will come to your rescue.
 SRCS = $(SRC_DIR)/main.cpp $(SRC_DIR)/Copernicus.cpp

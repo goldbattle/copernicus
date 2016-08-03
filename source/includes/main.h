@@ -10,6 +10,11 @@
 #include <iostream>
 #include "Copernicus.h"
 
+// Disable the console from popping up
+// http://stackoverflow.com/a/6882500
+#pragma comment(linker, "/SUBSYSTEM:windows /ENTRY:mainCRTStartup")
+
+
 // Random defines
 #define IDI_SYSTRAYDEMO                 107
 #define WM_USER_SHELLICON WM_USER + 1
