@@ -9,11 +9,11 @@ CFLAGS  = -I${INC_DIR}
 
 # Note: These will soon get unwieldy.
 # The wildcard and patsubt commands will come to your rescue.
-SRCS = $(SRC_DIR)/main.cpp
+SRCS = $(SRC_DIR)/main.cpp $(SRC_DIR)/Copernicus.cpp
 
 # Note: This will soon get unwieldy.
 # You will soon want to use an automatic dependency generator.
-DEPS = $(INC_DIR)/resource.h
+DEPS = $(INC_DIR)/main.h $(INC_DIR)/Copernicus.h
 
 # Compile, and also specify the include directory
 # By using -I we can use headers without the "includes" folder name

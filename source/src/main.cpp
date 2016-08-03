@@ -1,32 +1,9 @@
-// Windows Header Files:
-#include <windows.h>
-#include <shellapi.h>
-// C RunTime Header Files
-#include <stdlib.h>
-#include <malloc.h>
-#include <memory.h>
-#include <tchar.h>
-// C++ Runtime files
-#include <iostream>
-#include "resource.h"
 
-#define MAX_LOADSTRING 100
-#define WM_USER_SHELLICON WM_USER + 1
+#include "main.h"
 
-// Global Variables:
-HINSTANCE hInst;
-MSG msg;
-NOTIFYICONDATA nidApp;
-HMENU hPopMenu;
-BOOL bDisable = FALSE;
 
-// Forward declarations of functions included in this code module:
-ATOM MyRegisterClass(HINSTANCE hInstance);
-BOOL InitInstance(HINSTANCE, int);
-LRESULT CALLBACK WndProc(HWND, UINT, WPARAM, LPARAM);
 
 int APIENTRY _tWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPTSTR lpCmdLine, int nCmdShow) {
-
 
   // Debug
   std::cout << "[debug]: Windows Main Function Called" << std::endl;
@@ -102,8 +79,8 @@ ATOM MyRegisterClass(HINSTANCE hInstance) {
   wcex.hInstance = hInstance;
   wcex.hCursor = LoadCursor(NULL, IDC_ARROW);
   wcex.hbrBackground = (HBRUSH)(COLOR_WINDOW+1);
-  wcex.lpszMenuName = "SYSTRAYDEMO";
-  wcex.lpszClassName = "SysTrayMenu";
+  wcex.lpszMenuName = "Copernicus";
+  wcex.lpszClassName = "CopernicusMenu";
   wcex.hIcon = hMainIcon;
   wcex.hIconSm = hSmallIcon;
 
@@ -129,7 +106,7 @@ BOOL InitInstance(HINSTANCE hInstance, int nCmdShow) {
   hInst = hInstance;
 
   // Create our windowIDM_ADMIN_PANEL
-  hWnd = CreateWindow("SysTrayMenu", "SysTrayMenu", WS_OVERLAPPEDWINDOW, CW_USEDEFAULT, CW_USEDEFAULT,
+  hWnd = CreateWindow("CopernicusMenu", "CopernicusMenu", WS_OVERLAPPEDWINDOW, CW_USEDEFAULT, CW_USEDEFAULT,
                       CW_USEDEFAULT, CW_USEDEFAULT, (HWND) NULL, (HMENU) NULL, hInstance, (LPVOID) NULL);
 
   // Check to make sure the window is created
@@ -147,7 +124,7 @@ BOOL InitInstance(HINSTANCE hInstance, int nCmdShow) {
   nidApp.uFlags = NIF_ICON | NIF_MESSAGE | NIF_TIP; //ORing of all the flags
   nidApp.hIcon = hMainIcon; // handle of the Icon to be displayed, obtained from LoadIcon
   nidApp.uCallbackMessage = WM_USER_SHELLICON; 
-  strcpy(nidApp.szTip, "SysTray Demo");
+  strcpy(nidApp.szTip, "Copernicus");
   Shell_NotifyIcon(NIM_ADD, &nidApp);
 
   // Success we have started the application
@@ -182,7 +159,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam) 
         UINT uFlag = MF_BYPOSITION|MF_STRING;
         
         // Create the popup menu, which we will load buttons in
-        hPopMenu = CreatePopupMenu();
+        HMENU hPopMenu = CreatePopupMenu();
 
         // Insert the about dialog
         InsertMenu(hPopMenu, 0xFFFFFFFF, MF_BYPOSITION|MF_STRING, IDM_ADMIN_PANEL, _T("Admin Panel"));
@@ -191,19 +168,20 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam) 
         InsertMenu(hPopMenu, 0xFFFFFFFF, MF_SEPARATOR, IDM_SEP, _T("SEP"));
 
         // If disabled is enabled, then grayout the test buttons
-        if(bDisable == TRUE) {
+        if(!appCoper.is_enabled()) {
           uFlag |= MF_GRAYED;
         }
 
-        // Add test menus
-        InsertMenu(hPopMenu, 0xFFFFFFFF, uFlag, IDM_TEST2, _T("Test 2")); // Test 2
-        InsertMenu(hPopMenu, 0xFFFFFFFF, uFlag, IDM_TEST1, _T("Test 1")); // Test 1
+        // Add stats
+        InsertMenu(hPopMenu, 0xFFFFFFFF, uFlag, IDM_STAT1, appCoper.get_dns_queries().c_str());
+        InsertMenu(hPopMenu, 0xFFFFFFFF, uFlag, IDM_STAT2, appCoper.get_ads_blocked_total().c_str());
+        InsertMenu(hPopMenu, 0xFFFFFFFF, uFlag, IDM_STAT3, appCoper.get_ads_blocked_percent().c_str());
 
         // Insert a nice separator
         InsertMenu(hPopMenu, 0xFFFFFFFF, MF_SEPARATOR, IDM_SEP, _T("SEP"));
 
         // If we are disabled, then show the enable button instead
-        if(bDisable == TRUE) {
+        if(!appCoper.is_enabled()) {
           InsertMenu(hPopMenu, 0xFFFFFFFF, MF_BYPOSITION|MF_STRING, IDM_ENABLE, _T("Enable"));                  
         }
         else {
@@ -236,21 +214,13 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam) 
       case IDM_ADMIN_PANEL:
         ShellExecute(NULL, "open", "http://google.com", NULL, NULL, SW_SHOWNORMAL);
         break;
-      // Test button 1 has been clicked
-      case IDM_TEST1:
-        MessageBox(NULL, "This is a test for menu Test 1", "Test 1", MB_OK);
-        break;
-      // Test button 1 has been clicked
-      case IDM_TEST2:
-        MessageBox(NULL, "This is a test for menu Test 2", "Test 2", MB_OK);
-        break;
       // Disable button have been clicked, toggle our state
       case IDM_DISABLE:
-        bDisable = TRUE;
+        appCoper.set_enabled(false);
         break;
       // Enable button has been clicked, toggle our state
       case IDM_ENABLE:
-        bDisable = FALSE;
+        appCoper.set_enabled(true);
         break;
       // Exit button, close the program, and destroy all parts
       case IDM_EXIT:
