@@ -1,14 +1,17 @@
 #include "copernicus/Copernicus.h"
 
+
 using namespace std;
+using json = nlohmann::json;
+
 
 // Default constructor
 Copernicus::Copernicus() {
   status = true;
   url_admin = "https://github.com/goldbattle/copernicus/";
-  stat_dns = 18108;
-  stat_ads_total = 14648;
-  stat_ads_percent = 80.89;
+  stat_dns = 0;
+  stat_ads_total = 0;
+  stat_ads_percent = 0;
 }
 
 // This will poll the API can get new stats
@@ -20,30 +23,62 @@ void Copernicus::update_stats() {
 
   // Create our response object
   MyNetwork network;
+  std::string data_raw;
 
   // Grab api json using curl
   try {
 
     // Host and url
     std::string host("date.jsontest.com");
-    std::string url("/");
+    std::string api_path("/");
 
     // Open the connection to the server
-    std::string data = network.Get(host, url);
+    data_raw = network.Get(host, api_path);
 
     // Data returned
-    std::cout << "Data:" << endl << data << endl;
+    //std::cout << "[debug]: response data" << endl << data_raw << endl;
 
   }
   // Catch any problems with the http requests
   catch(const happyhttp::Wobbly& e) {
-    std::cout <<"[error]: HTTP Error \"" << e.what() << "\"" << std::endl;
+    // Error out
+    std::cerr <<"[error]: HTTP Error \"" << e.what() << "\"" << std::endl;
+    // Set to zero values
+    stat_dns = 0;
+    stat_ads_total = 0;
+    stat_ads_percent = 0;
+    // Return
+    return;
   }
 
-  // TODO: Update main variables
-  stat_dns += 1;
-  stat_ads_total += 1;
-  stat_ads_percent += 1;
+  // Master api json variable
+  json data_json;
+
+  // Parse the json
+  try {
+    
+    // Convert string to json
+    data_json = json::parse(data_raw);
+
+    cout << data_json.dump() << endl;
+
+    // Parse api response
+    stat_dns = data_json["milliseconds_since_epoch"].get<int>();
+    stat_ads_total = data_json["milliseconds_since_epoch"].get<int>();
+    stat_ads_percent = data_json["milliseconds_since_epoch"].get<double>();
+
+  }
+  // Unable to parse json, reset values
+  catch(...) {
+    // Error out
+    std::cerr <<"[error]: Unable to parse JSON" << std::endl;
+    // Set to zero values
+    stat_dns = 0;
+    stat_ads_total = 0;
+    stat_ads_percent = 0;
+    // Return
+    return;
+  }
 
 }
 

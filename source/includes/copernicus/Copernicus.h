@@ -6,9 +6,12 @@
 #include <memory>
 #include <cstdint>
 
+#include "json/json.h"
 #include "copernicus/MyNetwork.h"
 
+// For convenience
 using namespace std;
+using json = nlohmann::json;
 
 /**
  * Main class that handles all the details of getting
