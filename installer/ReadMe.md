@@ -1,0 +1,3 @@
+## Installer
+
+Right now we use the [Inno Setup](http://www.jrsoftware.org/isinfo.php) software which allows for a super easy way to create an executable for a program. The included script tells Inno how to create the installer. All the documentation can be found online [here](http://www.jrsoftware.org/ishelp/). To build the installer simply [download](http://www.jrsoftware.org/isdl.php) Inno and open the script in the editor. Using the build menu, the installer can be build. Note that right now it uses absolute paths, not sure how to change that to relative paths.
