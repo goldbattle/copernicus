@@ -19,7 +19,7 @@ CFLAGS  = -I${INC_DIR} -L${LIB_DIR} -D_GLIBCXX_USE_CXX11_ABI=0
 
 # Note: These will soon get unwieldy.
 # The wildcard and patsubt commands will come to your rescue.
-SRCS = $(SRC_DIR)/copernicus/main.cpp $(SRC_DIR)/copernicus/Copernicus.cpp $(SRC_DIR)/copernicus/MyNetwork.cpp $(SRC_DIR)/happyhttp/happyhttp.cpp
+SRCS = $(SRC_DIR)/main.cpp $(SRC_DIR)/copernicus/Copernicus.cpp $(SRC_DIR)/copernicus/MyNetwork.cpp $(SRC_DIR)/happyhttp/happyhttp.cpp
 
 # Note: This will soon get unwieldy.
 # You will soon want to use an automatic dependency generator.
@@ -32,7 +32,7 @@ LIBS = -lws2_32
 
 # Compile, and also specify the include directory
 # By using -I we can use headers without the "includes" folder name
-all: src/copernicus/main.cpp
+all: src/main.cpp
 	${CC} ${CFLAGS} -o copernicus.exe ${SRCS} ${LIBS}
 
 clean: 
