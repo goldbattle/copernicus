@@ -3,6 +3,11 @@
 
 #include <iostream>
 #include <sstream>
+#include <memory>
+#include <cstdint>
+
+// Main http library we will use to make requests
+#include "happyhttp/happyhttp.h"
 
 using namespace std;
 
@@ -49,6 +54,14 @@ class Copernicus {
     int stat_dns;
     int stat_ads_total;
     double stat_ads_percent;
+
+
+    // Curl callback function
+    std::size_t callback( const char* in, std::size_t size, std::size_t num, std::string* out) {
+        const std::size_t totalBytes(size * num);
+        out->append(in, totalBytes);
+        return totalBytes;
+    }
 
 };
 

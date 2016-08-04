@@ -8,7 +8,7 @@
 #include <tchar.h>
 // C++ Runtime files
 #include <iostream>
-#include "Copernicus.h"
+#include "copernicus/Copernicus.h"
 
 // Disable the console from popping up
 // http://stackoverflow.com/a/6882500

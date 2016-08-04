@@ -3,9 +3,11 @@
 # http://stackoverflow.com/a/22545645
 
 SRC_DIR = src
+LIB_DIR = libs
 INC_DIR = includes
-CC      = g++ -g
-CFLAGS  = -I${INC_DIR}
+CC      = g++ -g -std=c++11
+CFLAGS  = -I${INC_DIR} -L${LIB_DIR}
+
 
 # Use the following to build the program without
 # The normal console printout (MinGW)
@@ -14,16 +16,21 @@ CFLAGS  = -I${INC_DIR}
 
 # Note: These will soon get unwieldy.
 # The wildcard and patsubt commands will come to your rescue.
-SRCS = $(SRC_DIR)/main.cpp $(SRC_DIR)/Copernicus.cpp
+SRCS = $(SRC_DIR)/copernicus/main.cpp $(SRC_DIR)/copernicus/Copernicus.cpp $(SRC_DIR)/happyhttp/happyhttp.cpp
 
 # Note: This will soon get unwieldy.
 # You will soon want to use an automatic dependency generator.
-DEPS = $(INC_DIR)/main.h $(INC_DIR)/Copernicus.h
+DEPS = $(wildcard $(INC_DIR)/*.h)
+
+# Libraries we need to include
+# We can static link them here
+# Need windows library for sockets
+LIBS = -lws2_32
 
 # Compile, and also specify the include directory
 # By using -I we can use headers without the "includes" folder name
-all: src/main.cpp
-	${CC} ${CFLAGS} -o copernicus.exe ${SRCS} ${DEPS}
+all: src/copernicus/main.cpp
+	${CC} ${CFLAGS} -o copernicus.exe ${SRCS} ${LIBS}
 
 clean: 
 	$(RM) copernicus.exe

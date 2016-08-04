@@ -1,6 +1,4 @@
-
-#include "main.h"
-
+#include "copernicus/main.h"
 
 
 int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPTSTR lpCmdLine, int nCmdShow) {
@@ -200,7 +198,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam) 
         // Display the menu, and put it near the cursor
         SetForegroundWindow(hWnd);
         GetCursorPos(&lpClickPoint);
-        TrackPopupMenu(hPopMenu,TPM_LEFTALIGN|TPM_LEFTBUTTON|TPM_BOTTOMALIGN,lpClickPoint.x, lpClickPoint.y,0,hWnd,NULL);
+        TrackPopupMenu(hPopMenu,TPM_RIGHTALIGN|TPM_LEFTBUTTON|TPM_BOTTOMALIGN,lpClickPoint.x,lpClickPoint.y,0,hWnd,NULL);
         return true;
     }
     break;
