@@ -1,12 +1,15 @@
 # Simple Makefile - August 2, 2016
 # Most of it is copied from there
 # http://stackoverflow.com/a/22545645
-
 SRC_DIR = src
 LIB_DIR = libs
 INC_DIR = includes
 CC      = g++ -g -std=c++11
-CFLAGS  = -I${INC_DIR} -L${LIB_DIR}
+
+# Note we need to disable the 'Dual ABI' used in c++11
+# https://gcc.gnu.org/onlinedocs/libstdc++/manual/using_dual_abi.html
+# Causes errors with strings
+CFLAGS  = -I${INC_DIR} -L${LIB_DIR} -D_GLIBCXX_USE_CXX11_ABI=0
 
 
 # Use the following to build the program without
@@ -16,7 +19,7 @@ CFLAGS  = -I${INC_DIR} -L${LIB_DIR}
 
 # Note: These will soon get unwieldy.
 # The wildcard and patsubt commands will come to your rescue.
-SRCS = $(SRC_DIR)/copernicus/main.cpp $(SRC_DIR)/copernicus/Copernicus.cpp $(SRC_DIR)/happyhttp/happyhttp.cpp
+SRCS = $(SRC_DIR)/copernicus/main.cpp $(SRC_DIR)/copernicus/Copernicus.cpp $(SRC_DIR)/copernicus/MyNetwork.cpp $(SRC_DIR)/happyhttp/happyhttp.cpp
 
 # Note: This will soon get unwieldy.
 # You will soon want to use an automatic dependency generator.

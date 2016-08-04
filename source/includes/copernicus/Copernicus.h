@@ -6,8 +6,7 @@
 #include <memory>
 #include <cstdint>
 
-// Main http library we will use to make requests
-#include "happyhttp/happyhttp.h"
+#include "copernicus/MyNetwork.h"
 
 using namespace std;
 
