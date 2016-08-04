@@ -60,8 +60,6 @@ void Copernicus::update_stats() {
     // Convert string to json
     data_json = json::parse(data_raw);
 
-    cout << data_json.dump() << endl;
-
     // Parse api response
     stat_dns = data_json["milliseconds_since_epoch"].get<int>();
     stat_ads_total = data_json["milliseconds_since_epoch"].get<int>();
