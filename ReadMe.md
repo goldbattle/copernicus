@@ -7,7 +7,7 @@
 * Allow for viewing of stats in tray menu
 * Allow for enable/disable stat pulling
 * Simple one click to get to the dashboard
-* Easy installer for end user (long term)
+* Easy installer for end user
 
 
 

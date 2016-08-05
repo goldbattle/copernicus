@@ -70,9 +70,9 @@ class Copernicus {
     string url_admin;
 
     // Stats that we get from updating
-    int stat_dns;
-    int stat_ads_total;
-    double stat_ads_percent;
+    string stat_dns;
+    string stat_ads_total;
+    string stat_ads_percent;
 
 
     // Curl callback function

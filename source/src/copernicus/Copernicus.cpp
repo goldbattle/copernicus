@@ -26,10 +26,10 @@ using json = nlohmann::json;
 // Default constructor
 Copernicus::Copernicus() {
   status = true;
-  url_admin = "https://github.com/goldbattle/copernicus/";
-  stat_dns = 0;
-  stat_ads_total = 0;
-  stat_ads_percent = 0;
+  url_admin = "http://pi.hole/admin/";
+  stat_dns = "0";
+  stat_ads_total = "0";
+  stat_ads_percent = "0";
 }
 
 // This will poll the API can get new stats
@@ -47,14 +47,14 @@ void Copernicus::update_stats() {
   try {
 
     // Host and url
-    std::string host("date.jsontest.com");
-    std::string api_path("/");
+    std::string host("pi.hole");
+    std::string api_path("/admin/api.php?summary");
 
     // Open the connection to the server
     data_raw = network.Get(host, api_path);
 
     // Data returned
-    //std::cout << "[debug]: response data" << endl << data_raw << endl;
+    std::cout << "[debug]: response data" << endl << data_raw << endl;
 
   }
   // Catch any problems with the http requests
@@ -62,9 +62,9 @@ void Copernicus::update_stats() {
     // Error out
     std::cerr <<"[error]: HTTP Error \"" << e.what() << "\"" << std::endl;
     // Set to zero values
-    stat_dns = 0;
-    stat_ads_total = 0;
-    stat_ads_percent = 0;
+    stat_dns = "Error";
+    stat_ads_total = "Error";
+    stat_ads_percent = "Error";
     // Return
     return;
   }
@@ -79,9 +79,13 @@ void Copernicus::update_stats() {
     data_json = json::parse(data_raw);
 
     // Parse api response
-    stat_dns = data_json["milliseconds_since_epoch"].get<int>();
-    stat_ads_total = data_json["milliseconds_since_epoch"].get<int>();
-    stat_ads_percent = data_json["milliseconds_since_epoch"].get<double>();
+    stat_dns = data_json["dns_queries_today"].get<std::string>();
+    stat_ads_total = data_json["ads_blocked_today"].get<std::string>();
+
+    // Create a stream so we can add the percent
+    stringstream ss;
+    ss << data_json["ads_percentage_today"].get<std::string>() << "%";
+    stat_ads_percent = ss.str();
 
   }
   // Unable to parse json, reset values
@@ -89,9 +93,9 @@ void Copernicus::update_stats() {
     // Error out
     std::cerr <<"[error]: Unable to parse JSON" << std::endl;
     // Set to zero values
-    stat_dns = 0;
-    stat_ads_total = 0;
-    stat_ads_percent = 0;
+    stat_dns = "Error";
+    stat_ads_total = "Error";
+    stat_ads_percent = "Error";
     // Return
     return;
   }
@@ -131,6 +135,6 @@ string Copernicus::get_ads_blocked_total() {
 // Accessors method to percentage of ads
 string Copernicus::get_ads_blocked_percent() {
   stringstream ss;
-  ss << "Traffic Percent: " << stat_ads_percent << "%";
+  ss << "Traffic Percent: " << stat_ads_percent;
   return ss.str();
 }
