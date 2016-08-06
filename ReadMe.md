@@ -22,4 +22,4 @@ Right now the only dependency is ensuring that the MinGW with compiler is instal
 
 ## Screenshots
 
-![screenshot 1](docs/screenshot_1.png "Screenshot 1")
+![screenshot 2](docs/screenshot_2.png "Screenshot 2")
