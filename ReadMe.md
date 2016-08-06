@@ -21,6 +21,7 @@ Right now the only dependency is ensuring that the MinGW with compiler is instal
 * Install MSYS2 x86_64 from https://msys2.github.io/
 * Add `C:\msys64\mingw64\bin` and `C:\msys64\usr\bin` to `PATH`
 * Restart all editors to load new environmental variables
+* Run `make` in the source folder to create an exe file
 
 
 ## Screenshots
