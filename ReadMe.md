@@ -2,14 +2,17 @@
 
 [Copernicus](https://en.wikipedia.org/wiki/Orbiting_Astronomical_Observatory) aims to be a light weight windows desktop client for the [Pi-Hole](https://github.com/pi-hole/pi-hole) advertising-aware DNS/web server. As a simple tray application, it should be able to view the current stats, and also allow for a simple click to open the Pi-Hole admin panel. This project was created to learn how to create a simple application using the windows apis.
 
-## Goals
+## Features
 
 * Allow for viewing of stats in tray menu
 * Allow for enable/disable stat pulling
 * Simple one click to get to the dashboard
 * Easy installer for end user
 
+## TODOs
 
+* Actual icon for the program to use
+* Auto polling (i.e. make use of the enable/disable button)
 
 ## Dependencies
 
