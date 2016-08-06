@@ -15,7 +15,7 @@ CFLAGS  = -I${INC_DIR} -L${LIB_DIR} -D_GLIBCXX_USE_CXX11_ABI=0
 # Use the following to build the program without
 # The normal console printout (MinGW)
 # http://stackoverflow.com/a/9619254
-#CFLAGS  = -I${INC_DIR} -mwindows
+#CFLAGS  += -mwindows
 
 # Note: These will soon get unwieldy.
 # The wildcard and patsubt commands will come to your rescue.
