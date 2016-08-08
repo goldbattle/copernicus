@@ -11,7 +11,6 @@
 
 ## TODOs
 
-* Actual icon for the program to use
 * Auto polling (i.e. make use of the enable/disable button)
 
 ## Dependencies
