@@ -25,11 +25,27 @@ using json = nlohmann::json;
 
 // Default constructor
 Copernicus::Copernicus() {
+  // Update local information
   status = true;
   url_admin = "http://pi.hole/admin/";
   stat_dns = "0";
   stat_ads_total = "0";
   stat_ads_percent = "0";
+  // Create auto update thread (5 minutes)
+  auto fp = std::bind(&Copernicus::update_stats, this);
+  int delay = 300000;
+  timer_start(fp, delay);
+}
+
+// Starts a separate thread
+void Copernicus::timer_start(std::function<void()> func, unsigned int interval) {
+    std::thread([func, interval]() {
+        while (true) {
+          std::cout << "[debug]: timer thread called" << endl;
+          func();
+          std::this_thread::sleep_for(std::chrono::milliseconds(interval));
+        }
+    }).detach();
 }
 
 // This will poll the API can get new stats

@@ -22,6 +22,9 @@
 #include <sstream>
 #include <memory>
 #include <cstdint>
+#include <chrono>
+#include <thread>
+#include <functional>
 
 #include "json/json.h"
 #include "copernicus/MyNetwork.h"
@@ -39,6 +42,9 @@ class Copernicus {
 
     // Public constructor
     Copernicus();
+
+    // Starts a separate thread
+    void timer_start(std::function<void()> func, unsigned int interval);
 
     // This will poll the API can get new stats
     void update_stats();
