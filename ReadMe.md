@@ -8,10 +8,7 @@
 * Allow for enable/disable stat pulling
 * Simple one click to get to the dashboard
 * Easy installer for end user
-
-## TODOs
-
-* Auto polling (i.e. make use of the enable/disable button)
+* Auto polling (every 5 minutes)
 
 ## Dependencies
 

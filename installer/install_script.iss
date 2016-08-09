@@ -2,7 +2,7 @@
 ; SEE THE DOCUMENTATION FOR DETAILS ON CREATING INNO SETUP SCRIPT FILES!
 
 #define MyAppName "Copernicus"
-#define MyAppVersion "1.1"
+#define MyAppVersion "1.2"
 #define MyAppPublisher "Patrick Geneva"
 #define MyAppURL "https://github.com/goldbattle/copernicus/"
 #define MyAppExeName "copernicus.exe"
